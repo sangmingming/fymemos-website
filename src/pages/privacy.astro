@@ -1,88 +1,183 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
+
+const sections = [
+  {
+    title: "概述",
+    body: [
+      "云笺（Yunjian，下称“本应用”或“我们”）是一款完全运行在你本地设备上的便笺应用。这份隐私政策说明我们在你使用本应用时，对你数据的处理方式。",
+      "简单一句话：**我们不收集任何数据，不上传任何内容到任何服务器**。",
+    ],
+  },
+  {
+    title: "1. 我们收集哪些数据",
+    body: [
+      "**无。** 本应用不内置任何形式的遥测、统计、广告、崩溃上报或行为分析 SDK。",
+      "应用启动时不发起任何网络请求（事实上，应用主程序包并不申请网络权限）。",
+      "如果你在系统设置或手机厂商的系统服务中看到与本应用相关的网络流量，请检查系统层级的诊断或预装组件，而非本应用。",
+    ],
+  },
+  {
+    title: "2. 数据存储在哪里",
+    body: [
+      "你在云笺中创建的所有 memo（便笺）内容、# 标签、图片资源、应用设置、HeatMap 数据，**全部保存在你设备本地的 SQLite 数据库与 Android 应用沙盒目录中**。",
+      "这些数据受操作系统级沙盒保护，其他普通应用无法访问。我们也不会。",
+    ],
+  },
+  {
+    title: "3. 申请的权限",
+    body: [
+      "我们只申请实现核心功能所必需的最小权限集合：",
+    ],
+    bullets: [
+      ["相机（CAMERA）", "用于在新建 memo 时直接拍摄并插入图片。不申请时不会触发。"],
+      ["存储 / 媒体（READ_MEDIA_IMAGES / READ_EXTERNAL_STORAGE）", "用于从相册选择图片插入 memo。不申请时不会触发。"],
+      ["Share Intent 接收（系统级）", "用于接收其他 App 通过系统分享菜单传入的图片与文本，自动转为 memo 草稿。"],
+    ],
+    tail:
+      "我们**不申请**以下权限：INTERNET（网络）、ACCESS_FINE_LOCATION（精确定位）、READ_CONTACTS（通讯录）、RECORD_AUDIO（麦克风）等。",
+  },
+  {
+    title: "4. 第三方数据收集",
+    body: [
+      "本应用没有集成任何第三方 SDK（无 Firebase、无 Google Analytics、无 Crashlytics、无任何广告 SDK）。",
+      "你设备的操作系统（Android、iOS 等）、设备厂商、应用商店（Google Play）以及安装的其他应用可能在各自权限范围内收集设备级数据，这与本应用无关。",
+      "我们建议你在安装新应用前查阅相应应用的隐私政策。",
+    ],
+  },
+  {
+    title: "5. 备份与导出",
+    body: [
+      "当前版本不提供云端备份功能。所有数据都保留在你的设备本地。",
+      "后续版本计划在设置页提供本地导出（导出 JSON / Markdown）与本地导入功能（设置页已留入口）。",
+      "在那之前，如需迁移或备份数据，你可以通过 Android 系统的备份功能（取决于设备厂商），或通过 ADB 取出应用私有目录下的 SQLite 数据库与图片资源。",
+    ],
+  },
+  {
+    title: "6. 删除应用 = 删除数据",
+    body: [
+      "卸载本应用会同时清除应用沙盒内的全部本地数据。这是一个彻底的、不可逆的删除。",
+      "如果你只是想“清空内容但保留 App”，可以在 App 内通过归档 + 手动删除的方式管理；目前没有提供“一键清空所有 memo”的按钮（这是出于防止误操作的设计考量）。",
+    ],
+  },
+  {
+    title: "7. 开源与可审计",
+    body: [
+      "本应用代码以 GPLv3 协议在 GitHub 完全开源。任何人都可以审查、修改与自行构建。",
+      "代码仓库：[github.com/sangmingming/FlyerNotes](https://github.com/sangmingming/FlyerNotes)",
+      "如果你在源码中发现与本隐私政策不一致的地方，请优先以源码为准（这是开源应用的核心保障），并通过下方联系方式告知我们。",
+    ],
+  },
+  {
+    title: "8. 儿童隐私",
+    body: [
+      "本应用不收集任何用户数据，因此不存在与儿童相关的特殊隐私问题。任何年龄用户都可放心使用，应用本身不包含任何不适合未成年人的内容。",
+    ],
+  },
+  {
+    title: "9. 政策变更",
+    body: [
+      "如果我们将来加入需要联网或数据上报的功能（例如可选的云端备份），我们会：",
+    ],
+    bullets: [
+      "在此页面提前发布更新后的隐私政策",
+      "在 App 内通过显著的弹窗或横幅告知用户，并取得明确同意后才启用相关功能",
+      "默认行为始终保持“完全本地”，新增的网络功能必须由用户主动开启",
+    ],
+    tail:
+      "本隐私政策的任何变更都会在版本历史中保留可追溯的记录。",
+  },
+  {
+    title: "10. 联系我们",
+    body: [
+      "如果你对本隐私政策有任何疑问、意见或投诉，请通过邮箱联系我们：**[i@isming.me](mailto:i@isming.me)**。",
+      "我们承诺在收到邮件后的 14 个自然日内回复。",
+    ],
+  },
+];
+
+const lastUpdated = "2026 年 7 月 5 日";
 ---
 
-<Layout>
-    <main class="pt-20 pb-12 px-4 max-w-4xl mx-auto">
-        <h1 class="text-3xl font-bold mb-8">Privacy Policy</h1>
+<Layout title="隐私政策 · 云笺 Yunjian" description="云笺的隐私政策：不收集任何数据，不上传任何内容，所有 memo 仅保存在你的设备本地。">
+  <nav class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-white/70 dark:bg-[#0F1115]/70 border-b border-black/5 dark:border-white/5">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 py-4 flex justify-between items-center">
+      <a href="/" class="flex items-center gap-2.5 group">
+        <img src="/favicon.svg" alt="云笺" class="w-9 h-9 rounded-xl" />
+        <span class="font-bold text-lg tracking-tight">云笺<span class="text-[#5C7AE6] dark:text-[#8FA9FF] ml-1.5">Yunjian</span></span>
+      </a>
+      <a href="/" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-sm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        返回首页
+      </a>
+    </div>
+  </nav>
 
-        <div
-            
-            class="min-h-screen p-12 dark:bg-gray-800 dark:text-gray-300"
-        >
-           <p >
-                Last updated: March 26, 2025
-            </p><br  /><h2 >
-                Introduction
-            </h2><p >
-                This Privacy Policy is designed to help you understand our
-                practices regarding any information we might collect from you or
-                that you provide to us, the ways in which we use this
-                information, and how we handle it.<br  /> Given
-                that we do not collect any personal data or non-personal data, our
-                practices are straightforward and committed to safeguarding your
-                privacy.
-            </p><br  /><h2 >
-                Personal Data Collection and Use
-            </h2><p >
-                FyMemos is an open-source application, and we are dedicated to
-                user privacy. In line with this, we confirm that we do not
-                collect, store, process, or use any personal data or
-                non-personal data from you while you use our application. <br
-                    
-                /> Personal data refers to any information that could potentially
-                identify you as an individual. Non-personal data refers to any information
-                that does not directly identify you and is aggregated or anonymized.
-                Since we do not collect any such information, there's no possibility
-                of us using, sharing, or selling this data.
-            </p><br  /><h2 >Security</h2><p
-                
-            >
-                As FyMemos does not collect any data, there are no concerns
-                regarding the transmission or storage of data. However, we still
-                prioritize the security of our application and the trust you
-                place in us by using it.
-            </p><br  /><h2 >
-                Third-Party Data Collection
-            </h2><p >
-                While FyMemos itself does not collect any personal or
-                non-personal data, it is important to note that users may still
-                be subject to data collection by third parties such as operating
-                systems (e.g. Android, iOS), device manufacturers, and other
-                apps that have permissions to access device data. We have no
-                control over and assume no responsibility for the data practices
-                of these third parties. We encourage users to review the privacy
-                policies of their operating system and device manufacturer to
-                better understand their data practices.
-            </p><br  /><h2 >
-                Changes to this Privacy Policy
-            </h2><p >
-                We may update our Privacy Policy from time to time. Thus, you
-                are advised to review this page periodically for any changes. We
-                will notify you of any changes by posting the new Privacy Policy
-                on this page. These changes are effective immediately after they
-                are posted on this page.
-            </p><br  />
-            <p> FyMemos is not affiliated with the open source project<a href="https://www.usememos.com/">✍️memos.</a> </p>
-            <h2 >
-                Contact Us
-            </h2><p >
-                If you have any questions about this Privacy Policy, do not
-                hesitate to contact us by email: i@isming.me
-            </p><div class="mt-4">
-                <a href="/" class=""
-                    ><div class="inline-block dark:text-gray-300">
-                        <div
-                            class="flex items-center rounded-lg px-2 py-1 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
-                        >
-                            <span
-                                class="iconify i-material-symbols:arrow-back me-2"
-                                aria-hidden="true"></span><font _mstmutation="1"
-                                >Homepage</font>
-                        </div>
-                    </div></a>
-            </div>
+  <main class="pt-28 sm:pt-36 pb-20 px-5 sm:px-8">
+    <article class="max-w-3xl mx-auto">
+      <header class="mb-12 text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#5C7AE6]/10 dark:bg-[#5C7AE6]/15 text-[#5C7AE6] dark:text-[#8FA9FF] text-xs font-medium mb-5">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#5C7AE6]"></span>
+          Privacy Policy
         </div>
-    </main>
+        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">隐私政策</h1>
+        <p class="text-gray-600 dark:text-gray-400">最后更新：{lastUpdated}</p>
+      </header>
+
+      <!-- 重点速览卡片 -->
+      <aside class="mb-12 rounded-2xl border border-[#5C7AE6]/20 dark:border-[#5C7AE6]/30 bg-gradient-to-br from-[#5C7AE6]/[0.04] to-transparent p-6 sm:p-8">
+        <h2 class="font-semibold text-lg mb-3 flex items-center gap-2">
+          <span class="text-2xl">🛡️</span>
+          一句话总结
+        </h2>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+          云笺<strong>不收集任何用户数据</strong>，<strong>不上传任何内容到任何服务器</strong>。所有 memo、标签、图片资源、设置与统计数据，都<strong>只保存在你的设备本地</strong>。我们不申请网络权限，App 内不集成任何第三方 SDK。
+        </p>
+      </aside>
+
+      <!-- 正文 -->
+      <div class="prose prose-gray dark:prose-invert max-w-none">
+        {sections.map((s) => (
+          <section class="mb-10">
+            <h2 class="text-2xl font-semibold tracking-tight mb-4 mt-2">{s.title}</h2>
+            {s.body.map((p) => (
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4" set:html={p} />
+            ))}
+            {s.bullets && (
+              <ul class="my-4 space-y-2.5">
+                {s.bullets.map(([term, def]) => (
+                  <li class="flex gap-3 leading-relaxed">
+                    <span class="text-[#5C7AE6] dark:text-[#8FA9FF] mt-1">•</span>
+                    <span class="text-gray-700 dark:text-gray-300">
+                      <strong class="font-semibold text-gray-900 dark:text-gray-100">{term}</strong>：{def}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {s.tail && (
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed mt-4" set:html={s.tail} />
+            )}
+          </section>
+        ))}
+
+        <div class="mt-16 pt-8 border-t border-black/5 dark:border-white/5 text-sm text-gray-500 dark:text-gray-500">
+          <p>本隐私政策适用于云笺（Yunjian）当前所有版本与未来版本，除非有新的功能启用网络或数据上报（届时会提前在本页面与 App 内告知）。</p>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="px-5 sm:px-8 py-10 border-t border-black/5 dark:border-white/5">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500 dark:text-gray-500">
+      <div>© 2026 云笺 Yunjian · 开源 · GPLv3</div>
+      <div class="flex items-center gap-5">
+        <a href="/" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">首页</a>
+        <a href="https://github.com/sangmingming/FlyerNotes" target="_blank" rel="noopener" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">GitHub</a>
+      </div>
+    </div>
+  </footer>
 </Layout>

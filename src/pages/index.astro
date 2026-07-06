@@ -1,78 +1,329 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
-import logo from '../assets/ic_launcher-playstore.png';
-import phoneimage from '../assets/screen_phone.png';
-import deskimage from '../assets/screen_desktop.png';
+import logo from "../assets/ic_launcher-playstore.png";
+import phoneImage from "../assets/screen_phone.png";
+import desktopImage from "../assets/screen_desktop.png";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const features = [
+  {
+    icon: "📍",
+    title: "纯本地存储",
+    desc: "所有 memo 与图片只保存在你自己的设备上。无账号、无登录、不上传任何数据。",
+    accent: "from-blue-500/15 to-blue-500/0",
+  },
+  {
+    icon: "🎨",
+    title: "Material You 设计",
+    desc: "跟随系统动态取色，浅色 / 深色 / 跟随系统三种模式，与你的设备主题浑然一体。",
+    accent: "from-pink-500/15 to-pink-500/0",
+  },
+  {
+    icon: "📱",
+    title: "全端覆盖",
+    desc: "Android、iOS、macOS、Windows、Linux、Web —— 一份 Flutter 代码，六端运行。",
+    accent: "from-purple-500/15 to-purple-500/0",
+  },
+  {
+    icon: "✍️",
+    title: "完整 Markdown",
+    desc: "标题、列表、任务清单、表格、行内 / 块级公式、代码块、引用、图片 …… 全部支持。",
+    accent: "from-emerald-500/15 to-emerald-500/0",
+  },
+  {
+    icon: "📊",
+    title: "HeatMap 热力图",
+    desc: "GitHub 风格的写作热力图，一眼看清一年的活跃节奏。",
+    accent: "from-orange-500/15 to-orange-500/0",
+  },
+  {
+    icon: "🔍",
+    title: "秒级搜索",
+    desc: "顶栏全局搜索，标签筛选与归档管理，让 memo 真正可用起来。",
+    accent: "from-cyan-500/15 to-cyan-500/0",
+  },
+];
+
+const faqs = [
+  {
+    q: "我的数据存在哪里？",
+    a: "所有 memo 内容、图片资源与设置都存储在你设备本地的 SQLite 数据库与应用沙盒目录中。云笺没有任何后端服务、不走任何第三方服务。",
+  },
+  {
+    q: "是否需要联网？",
+    a: "不需要。云笺的核心功能完全离线可用。你随时打开 App，随时记录，随时回看，没有任何等待同步的环节。",
+  },
+  {
+    q: "会支持多端同步吗？",
+    a: "当前版本专注于本地体验。多端同步是一个复杂的工程问题，我们更倾向于把“数据真正属于你”这件事做透——导出、备份、可审计的代码胜过另一套云服务。",
+  },
+  {
+    q: "怎么备份或迁移数据？",
+    a: "后续版本会提供本地导出与导入功能（设置页已留入口）。在那之前，所有数据都在 App 私有目录下，可通过 ADB / iTunes 文件共享等方式取出。",
+  },
+  {
+    q: "支持哪些 Markdown 语法？",
+    a: "标题、有序 / 无序 / 任务列表、引用、表格、行内与块级公式、代码块、删除线、高亮、加粗斜体、自动链接、图片、# 标签、memo 间相互引用等等。",
+  },
+  {
+    q: "代码是开源的吗？",
+    a: "完全开源。代码仓库在 GitHub 上以 GPLv3 协议公开，任何人都可以审计、修改与自行构建。",
+  },
+];
 ---
+
 <Layout>
-	<!-- 导航栏 -->
-	<nav class="bg-white shadow-sm fixed w-full z-10">
-	  <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-		<h1 class="text-xl font-bold text-blue-600">FyMemos</h1>
-		<a 
-      href="/privacy"  
-      class=" px-4 py-2 transition-colors">
-      Privacy
-    </a>
-	  </div>
-	</nav>
-  
-	<!-- 主要内容 -->
-	<main class="pt-20 pb-12 px-4">
-	  <!-- 应用介绍 -->
-	  <section class="max-w-4xl mx-auto text-center mb-16">
-		<div class="w-32 h-32 bg-blue-100 rounded-3xl mx-auto mb-6 p-6">
-		  <img src={logo.src} alt="App Icon" class="w-full h-full"/>
-		</div>
-		<h2 class="text-4xl font-bold mb-4">FyMemos</h2>
-		<p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
-			An App helps you write, manage memos, works with <a href="https://www.usememos.com/">✍️memos.</a>.
-			Crossplatform, support Android,iOS, Windows, Linux, Mac.
-		</p>
+  <!-- 导航栏 -->
+  <nav class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-white/70 dark:bg-[#0F1115]/70 border-b border-black/5 dark:border-white/5">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 py-4 flex justify-between items-center">
+      <a href="/" class="flex items-center gap-2.5 group">
+        <img src={logo.src} alt="云笺" class="w-9 h-9 rounded-xl shadow-sm group-hover:scale-105 transition-transform" />
+        <span class="font-bold text-lg tracking-tight">云笺<span class="text-[#5C7AE6] dark:text-[#8FA9FF] ml-1.5">Yunjian</span></span>
+      </a>
+      <div class="flex items-center gap-1 sm:gap-2 text-sm">
+        <a href="#features" class="hidden sm:inline-block px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">特性</a>
+        <a href="#screenshots" class="hidden sm:inline-block px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">截图</a>
+        <a href="#faq" class="hidden sm:inline-block px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">FAQ</a>
+        <a href="/privacy" class="px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">隐私政策</a>
+        <a
+          href="https://github.com/sangmingming/FlyerNotes"
+          target="_blank"
+          rel="noopener"
+          class="ml-1 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+          aria-label="GitHub"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.49v-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.55-1.13-4.55-5.04 0-1.11.39-2.02 1.03-2.74-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.32 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.74 0 3.92-2.34 4.78-4.57 5.03.36.32.68.94.68 1.9v2.81c0 .27.18.59.69.49A10.04 10.04 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/>
+          </svg>
+          <span class="hidden sm:inline">GitHub</span>
+        </a>
+      </div>
+    </div>
+  </nav>
 
+  <!-- Hero -->
+  <header class="relative pt-32 sm:pt-40 pb-16 sm:pb-24 px-5 sm:px-8">
+    <div class="max-w-5xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#5C7AE6]/10 dark:bg-[#5C7AE6]/15 text-[#5C7AE6] dark:text-[#8FA9FF] text-xs font-medium mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#5C7AE6]"></span>
+        v0.2.6 · 纯本地 · Material You
+      </div>
 
-	  </section>
+      <div class="relative inline-block mb-8">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#7C9CFF] to-[#ECA4FF] rounded-[2.5rem] blur-2xl opacity-40"></div>
+        <img
+          src={logo.src}
+          alt="云笺 App 图标"
+          class="relative w-28 h-28 sm:w-32 sm:h-32 rounded-[2rem] shadow-xl"
+        />
+      </div>
 
-	  <!-- 截图展示 -->
-	  <section class="flex justify-center mb-16">
-		<div class="flex gap-8">
-			<img 
-			src={phoneimage.src}
-			alt="App Screenshot" 
-			class="max-w-xs md:max-w-md w-full mx-auto mb-4"
-		  />
-		  <img 
-			src={deskimage.src}
-			alt="App Screenshot" 
-			class="max-w-xs md:max-w-md w-full mx-auto mb-4"
-		  />
-		</div>
-		
-		<!-- 更多截图... -->
-	  </section>
+      <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[1.05] mb-5">
+        云笺<span class="block sm:inline text-[#5C7AE6] dark:text-[#8FA9FF] ml-0 sm:ml-3">Yunjian</span>
+      </h1>
 
-	  <section class="flex justify-center mb-16">
-		<a href="https://play.google.com/store/apps/details?id=me.isming.fymemos"
-		>
-		 <img src="/play-badge.png" alt="Get it on Google Play" style="width: 181px; max-height: 54px;"/>
-		</a>
+      <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed mb-10">
+        一款基于 <strong class="font-semibold text-gray-900 dark:text-gray-100">Flutter 与 Material You</strong> 的纯本地便笺应用。<br class="hidden sm:block" />
+        所写即所得，所有内容只保存在你自己的设备上。
+      </p>
 
-		<a href="https://github.com/sangmingming/fymemos/releases/latest"
-		>
-		 <img src="/download_android_direct.svg" alt="Download Apk" style="width: 181px; max-height: 54px;"/>
-		</a>
-	  </section>
+      <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-6">
+        <a
+          href="https://play.google.com/store/apps/details?id=me.isming.flynotes"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center transition-transform hover:scale-[1.02]"
+        >
+          <img src="/play-badge.png" alt="Get it on Google Play" class="h-14" />
+        </a>
+        <a
+          href="https://github.com/sangmingming/FlyerNotes/releases/latest"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center transition-transform hover:scale-[1.02]"
+        >
+          <img src="/download_android_direct.svg" alt="直接下载 APK" class="h-14" />
+        </a>
+      </div>
 
-	  <!-- add faq here -->
+      <p class="text-xs text-gray-500 dark:text-gray-500">
+        Android 7.0+ · iOS · macOS · Windows · Linux · Web
+      </p>
+    </div>
+  </header>
 
-	  <!-- 页脚 -->
-	  <footer class="text-center text-gray-600">
-		<p>&copy; 2025 FyMemos. All rights reserved.</p>
-	  </footer> 
-	  
-	</main>
-  </Layout>
+  <!-- 三句话卖点 -->
+  <section class="px-5 sm:px-8 pb-16">
+    <div class="max-w-5xl mx-auto grid sm:grid-cols-3 gap-4 sm:gap-6">
+      <div class="rounded-2xl p-6 bg-white dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
+        <div class="text-3xl mb-3">🛡️</div>
+        <h3 class="font-semibold mb-1">零账号</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">打开即用，不需要注册，不需要登录。</p>
+      </div>
+      <div class="rounded-2xl p-6 bg-white dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
+        <div class="text-3xl mb-3">📴</div>
+        <h3 class="font-semibold mb-1">零联网</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">核心功能完全不依赖网络，离线正常工作。</p>
+      </div>
+      <div class="rounded-2xl p-6 bg-white dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
+        <div class="text-3xl mb-3">🔓</div>
+        <h3 class="font-semibold mb-1">开源透明</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">GPLv3 协议公开，代码可审计、可自建。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 特性 -->
+  <section id="features" class="px-5 sm:px-8 py-20 scroll-mt-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <p class="text-sm font-semibold text-[#5C7AE6] dark:text-[#8FA9FF] uppercase tracking-wider mb-2">Features</p>
+        <h2 class="text-3xl sm:text-5xl font-bold tracking-tight mb-4">为写得舒服而设计</h2>
+        <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          从 Markdown 语法到 Material You 取色，从热力图到桌面端拖拽，每一处细节都为"写得顺手"服务。
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {features.map((f) => (
+          <div class={`relative rounded-2xl p-6 bg-gradient-to-br ${f.accent} bg-white dark:bg-white/[0.03] border border-black/5 dark:border-white/5 hover:border-[#5C7AE6]/30 dark:hover:border-[#8FA9FF]/30 transition-colors`}>
+            <div class="text-3xl mb-4">{f.icon}</div>
+            <h3 class="text-lg font-semibold mb-2">{f.title}</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 截图 -->
+  <section id="screenshots" class="px-5 sm:px-8 py-20 scroll-mt-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <p class="text-sm font-semibold text-[#5C7AE6] dark:text-[#8FA9FF] uppercase tracking-wider mb-2">Screenshots</p>
+        <h2 class="text-3xl sm:text-5xl font-bold tracking-tight mb-4">在每种设备上都好看</h2>
+        <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          同一份 Flutter 代码，手机、平板、桌面自动选择最合适的布局。
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div class="relative group">
+          <div class="absolute inset-0 bg-gradient-to-tr from-[#7C9CFF]/20 to-[#ECA4FF]/20 rounded-3xl blur-2xl"></div>
+          <img
+            src={phoneImage.src}
+            alt="云笺手机端界面"
+            class="relative w-full max-w-sm mx-auto rounded-[2rem] shadow-2xl ring-1 ring-black/5 dark:ring-white/10 group-hover:scale-[1.02] transition-transform duration-500"
+          />
+        </div>
+        <div class="relative group">
+          <div class="absolute inset-0 bg-gradient-to-tr from-[#ECA4FF]/20 to-[#7C9CFF]/20 rounded-3xl blur-2xl"></div>
+          <img
+            src={desktopImage.src}
+            alt="云笺桌面端界面"
+            class="relative w-full rounded-2xl shadow-2xl ring-1 ring-black/5 dark:ring-white/10 group-hover:scale-[1.02] transition-transform duration-500"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 技术栈 -->
+  <section class="px-5 sm:px-8 py-20">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <p class="text-sm font-semibold text-[#5C7AE6] dark:text-[#8FA9FF] uppercase tracking-wider mb-2">Tech Stack</p>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">现代、好维护、跨平台</h2>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        {[
+          "Flutter",
+          "Dart",
+          "Material 3",
+          "sqflite",
+          "path_provider",
+          "go_router",
+          "image_picker",
+          "share_handler",
+          "desktop_drop",
+          "refena",
+          "intl",
+          "GPLv3",
+        ].map((t) => (
+          <div class="text-center py-4 px-3 rounded-xl bg-white dark:bg-white/[0.03] border border-black/5 dark:border-white/5 text-sm font-medium text-gray-700 dark:text-gray-300">
+            {t}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="px-5 sm:px-8 py-20 scroll-mt-20">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-14">
+        <p class="text-sm font-semibold text-[#5C7AE6] dark:text-[#8FA9FF] uppercase tracking-wider mb-2">FAQ</p>
+        <h2 class="text-3xl sm:text-5xl font-bold tracking-tight">常见问题</h2>
+      </div>
+      <div class="space-y-3">
+        {faqs.map((item) => (
+          <details class="group rounded-2xl bg-white dark:bg-white/[0.03] border border-black/5 dark:border-white/5 px-5 py-4 [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex items-center justify-between cursor-pointer list-none">
+              <span class="font-medium">{item.q}</span>
+              <span class="ml-4 text-gray-400 group-open:rotate-45 transition-transform text-xl leading-none">+</span>
+            </summary>
+            <p class="mt-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 下载 CTA -->
+  <section class="px-5 sm:px-8 py-20">
+    <div class="max-w-4xl mx-auto text-center rounded-3xl bg-gradient-to-br from-[#5C7AE6] to-[#7C9CFF] dark:from-[#3B5BDB] dark:to-[#5C7AE6] p-10 sm:p-16 text-white shadow-xl">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">开始写第一条云笺</h2>
+      <p class="text-white/85 mb-8 max-w-xl mx-auto">
+        免费、纯净、无广告。你的想法值得一个真正属于它自己的地方。
+      </p>
+      <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
+        <a
+          href="https://play.google.com/store/apps/details?id=me.isming.flynotes"
+          target="_blank"
+          rel="noopener"
+          class="inline-block bg-white text-[#5C7AE6] font-semibold px-6 py-3 rounded-xl hover:bg-white/90 transition-colors"
+        >
+          Google Play 下载
+        </a>
+        <a
+          href="https://github.com/sangmingming/FlyerNotes/releases/latest"
+          target="_blank"
+          rel="noopener"
+          class="inline-block bg-black/20 text-white font-semibold px-6 py-3 rounded-xl hover:bg-black/30 transition-colors"
+        >
+          GitHub Releases
+        </a>
+        <a
+          href="https://github.com/sangmingming/FlyerNotes"
+          target="_blank"
+          rel="noopener"
+          class="inline-block bg-transparent border border-white/40 text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/10 transition-colors"
+        >
+          查看源码
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="px-5 sm:px-8 py-10 border-t border-black/5 dark:border-white/5">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500 dark:text-gray-500">
+      <div>© 2026 云笺 Yunjian · 开源 · GPLv3</div>
+      <div class="flex items-center gap-5">
+        <a href="/privacy" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">隐私政策</a>
+        <a href="https://github.com/sangmingming/FlyerNotes" target="_blank" rel="noopener" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">GitHub</a>
+        <a href="mailto:i@isming.me" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">联系</a>
+      </div>
+    </div>
+  </footer>
+</Layout>

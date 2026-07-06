@@ -1,22 +1,98 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  pathname?: string;
+}
+
+const {
+  title = "云笺 · Yunjian — 纯本地的 Material You 便笺应用",
+  description = "云笺是一款基于 Flutter 与 Material You 的纯本地便笺应用。所有 memo 与图片都只保存在你的设备上，没有账号、不联网、不上传数据。",
+  pathname = Astro.url.pathname,
+} = Astro.props;
+
+const siteUrl = "https://yunjian.app";
+const fullUrl = new URL(pathname, siteUrl).toString();
+---
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>FyMemos</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="zh-CN" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- 基础 -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={fullUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#5C7AE6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1B1F2A" media="(prefers-color-scheme: dark)" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={fullUrl} />
+    <meta property="og:site_name" content="云笺 Yunjian" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-[#FAFBFC] text-[#1B1F2A] dark:bg-[#0F1115] dark:text-[#E5E7EB] antialiased">
+    <slot />
+
+    <script is:inline>
+      // 跟随系统主题，但用户切换后记住选择
+      (function () {
+        try {
+          const stored = localStorage.getItem("yunjian-theme");
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          if (stored === "dark" || (!stored && prefersDark)) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style is:global>
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    font-family:
+      "Inter", "Noto Sans SC", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+      Arial, sans-serif;
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    background-image:
+      radial-gradient(circle at 20% -10%, rgba(124, 156, 255, 0.18), transparent 40%),
+      radial-gradient(circle at 90% 10%, rgba(236, 164, 255, 0.12), transparent 50%);
+  }
+  body.dark {
+    background-image:
+      radial-gradient(circle at 20% -10%, rgba(124, 156, 255, 0.16), transparent 45%),
+      radial-gradient(circle at 90% 10%, rgba(236, 164, 255, 0.08), transparent 55%);
+  }
 </style>
