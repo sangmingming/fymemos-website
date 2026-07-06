@@ -14,9 +14,15 @@ const sections = [
     title: "1. 我们收集哪些数据",
     body: [
       "**无。** 本应用不内置任何形式的遥测、统计、广告、崩溃上报或行为分析 SDK。",
-      "应用启动时不发起任何网络请求（事实上，应用主程序包并不申请网络权限）。",
-      "如果你在系统设置或手机厂商的系统服务中看到与本应用相关的网络流量，请检查系统层级的诊断或预装组件，而非本应用。",
+      "应用不会主动向任何服务器发起后台网络请求，也不会自动上传你创建的 memo、标签、图片或任何使用数据。",
+      "以下是两条明确的边界：",
     ],
+    bullets: [
+      ["应用不主动上报", "不包含任何在后台静默上传设备信息、崩溃日志、行为轨迹或任何设备识别符的代码。"],
+      ["网络仅限用户主动触发", "如果你在 memo 中写入了 https:// 链接或远程图片 URL，应用会按你点击 / 渲染该资源的操作，发起一次明目的网络请求（例如在系统浏览器中打开链接，或加载你写的图片 URL）。这些请求由你明确触发、且目标仅限你指定的内容。"],
+    ],
+    tail:
+      "如果你在系统设置或手机厂商的系统服务中看到与本应用相关的网络流量，请检查系统层级的诊断或预装组件，而非本应用。",
   },
   {
     title: "2. 数据存储在哪里",
@@ -41,7 +47,8 @@ const sections = [
   {
     title: "4. 第三方数据收集",
     body: [
-      "本应用没有集成任何第三方 SDK（无 Firebase、无 Google Analytics、无 Crashlytics、无任何广告 SDK）。",
+      "本应用没有集成任何第三方 SDK（无 Firebase、无 Google Analytics、无 Crashlytics、无任何广告 SDK、无崩溃上报、无 A/B 测试框架）。",
+      "本应用没有集成任何形式的用户行为分析、转化追踪或设备指纹采集模块。",
       "你设备的操作系统（Android、iOS 等）、设备厂商、应用商店（Google Play）以及安装的其他应用可能在各自权限范围内收集设备级数据，这与本应用无关。",
       "我们建议你在安装新应用前查阅相应应用的隐私政策。",
     ],
@@ -62,12 +69,18 @@ const sections = [
     ],
   },
   {
-    title: "7. 开源与可审计",
+    title: "7. 可验证的承诺",
     body: [
-      "本应用代码以 GPLv3 协议在 GitHub 完全开源。任何人都可以审查、修改与自行构建。",
-      "代码仓库：[github.com/sangmingming/FlyerNotes](https://github.com/sangmingming/FlyerNotes)",
-      "如果你在源码中发现与本隐私政策不一致的地方，请优先以源码为准（这是开源应用的核心保障），并通过下方联系方式告知我们。",
+      "云笺不公开发布源代码，但本隐私政策中的每一条承诺，用户都可以通过以下方式独立验证：",
     ],
+    bullets: [
+      ["权限检查", "在 Android 系统中进入「设置 → 应用 → 云笺 → 权限」。云笺的权限列表中不会出现「通讯录」、「定位」、「麦克风」等与数据上报相关的权限；唯一联网用途的 INTERNET 权限仅用于你主动点击的链接与远程图片。"],
+      ["流量监控", "使用任何网络监控工具（如 NetGuard、Tracker Control 或系统自带的流量统计）观察云笺的运行时网络活动。理论上观测到的流量应为零。"],
+      ["安装包内容", "使用 APK 提取工具查看应用安装包。云笺不内置任何第三方分析、广告、推送或崩溃上报 SDK 的运行时依赖。"],
+      ["政策变更追溯", "本页底部的「最后更新」日期会随每次修改更新，你也可以在 GitHub Pages 部署历史中查看每次变更的完整记录。"],
+    ],
+    tail:
+      "我们欢迎安全研究人员、隐私倡导者与一般用户通过下方联系方式提交疑问、建议或合规问题。",
   },
   {
     title: "8. 儿童隐私",
@@ -81,9 +94,9 @@ const sections = [
       "如果我们将来加入需要联网或数据上报的功能（例如可选的云端备份），我们会：",
     ],
     bullets: [
-      "在此页面提前发布更新后的隐私政策",
-      "在 App 内通过显著的弹窗或横幅告知用户，并取得明确同意后才启用相关功能",
-      "默认行为始终保持“完全本地”，新增的网络功能必须由用户主动开启",
+      ["提前公示", "在此页面提前发布更新后的隐私政策，并在变更生效前给予至少 30 天公示期。"],
+      ["App 内告知", "在 App 内通过显著的弹窗或横幅告知用户，并取得明确同意后才启用相关功能。"],
+      ["默认保持本地", "默认行为始终保持“完全本地”，新增的网络功能必须由用户主动开启，绝不默认开启。"],
     ],
     tail:
       "本隐私政策的任何变更都会在版本历史中保留可追溯的记录。",
@@ -97,7 +110,7 @@ const sections = [
   },
 ];
 
-const lastUpdated = "2026 年 7 月 5 日";
+const lastUpdated = "2026 年 7 月 6 日";
 ---
 
 <Layout title="隐私政策 · 云笺 Yunjian" description="云笺的隐私政策：不收集任何数据，不上传任何内容，所有 memo 仅保存在你的设备本地。">
@@ -173,10 +186,10 @@ const lastUpdated = "2026 年 7 月 5 日";
 
   <footer class="px-5 sm:px-8 py-10 border-t border-black/5 dark:border-white/5">
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500 dark:text-gray-500">
-      <div>© 2026 云笺 Yunjian · 开源 · GPLv3</div>
+      <div>© 2026 云笺 Yunjian</div>
       <div class="flex items-center gap-5">
         <a href="/" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">首页</a>
-        <a href="https://github.com/sangmingming/FlyerNotes" target="_blank" rel="noopener" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">GitHub</a>
+        <a href="mailto:i@isming.me" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">联系</a>
       </div>
     </div>
   </footer>

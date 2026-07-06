@@ -66,8 +66,8 @@ const faqs = [
     a: "标题、有序 / 无序 / 任务列表、引用、表格、行内与块级公式、代码块、删除线、高亮、加粗斜体、自动链接、图片、# 标签、memo 间相互引用等等。",
   },
   {
-    q: "代码是开源的吗？",
-    a: "完全开源。代码仓库在 GitHub 上以 GPLv3 协议公开，任何人都可以审计、修改与自行构建。",
+    q: "我如何验证云笺真的不上传数据？",
+    a: "有两种可验证的检查方式：① 进入 Android 系统的「设置 → 应用 → 云笺 → 权限」，可以看到云笺不申请任何与「通讯录 / 定位 / 麦克风 / 后台活动」相关的权限；② 使用 NetGuard、Tracker Control 等网络监控工具在运行时观察云笺的网络活动。应用本身不会主动发起任何后台网络请求，唯一可能出现的连接是你在 memo 里写入的链接或远程图片 URL，且仅在你点击 / 渲染该资源时才会发起。",
   },
 ];
 ---
@@ -86,16 +86,15 @@ const faqs = [
         <a href="#faq" class="hidden sm:inline-block px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">FAQ</a>
         <a href="/privacy" class="px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">隐私政策</a>
         <a
-          href="https://github.com/sangmingming/FlyerNotes"
-          target="_blank"
-          rel="noopener"
+          href="mailto:i@isming.me"
           class="ml-1 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
-          aria-label="GitHub"
+          aria-label="联系我们"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.49v-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.55-1.13-4.55-5.04 0-1.11.39-2.02 1.03-2.74-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.32 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.74 0 3.92-2.34 4.78-4.57 5.03.36.32.68.94.68 1.9v2.81c0 .27.18.59.69.49A10.04 10.04 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
           </svg>
-          <span class="hidden sm:inline">GitHub</span>
+          <span class="hidden sm:inline">联系</span>
         </a>
       </div>
     </div>
@@ -166,9 +165,9 @@ const faqs = [
         <p class="text-sm text-gray-600 dark:text-gray-400">核心功能完全不依赖网络，离线正常工作。</p>
       </div>
       <div class="rounded-2xl p-6 bg-white dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
-        <div class="text-3xl mb-3">🔓</div>
-        <h3 class="font-semibold mb-1">开源透明</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-400">GPLv3 协议公开，代码可审计、可自建。</p>
+        <div class="text-3xl mb-3">🛡️</div>
+        <h3 class="font-semibold mb-1">数据零收集</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">无遥测、无统计、无崩溃上报，不集成任何第三方 SDK。</p>
       </div>
     </div>
   </section>
@@ -248,7 +247,6 @@ const faqs = [
           "desktop_drop",
           "refena",
           "intl",
-          "GPLv3",
         ].map((t) => (
           <div class="text-center py-4 px-3 rounded-xl bg-white dark:bg-white/[0.03] border border-black/5 dark:border-white/5 text-sm font-medium text-gray-700 dark:text-gray-300">
             {t}
@@ -303,14 +301,6 @@ const faqs = [
         >
           GitHub Releases
         </a>
-        <a
-          href="https://github.com/sangmingming/FlyerNotes"
-          target="_blank"
-          rel="noopener"
-          class="inline-block bg-transparent border border-white/40 text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/10 transition-colors"
-        >
-          查看源码
-        </a>
       </div>
     </div>
   </section>
@@ -318,10 +308,9 @@ const faqs = [
   <!-- 页脚 -->
   <footer class="px-5 sm:px-8 py-10 border-t border-black/5 dark:border-white/5">
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500 dark:text-gray-500">
-      <div>© 2026 云笺 Yunjian · 开源 · GPLv3</div>
+      <div>© 2026 云笺 Yunjian</div>
       <div class="flex items-center gap-5">
         <a href="/privacy" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">隐私政策</a>
-        <a href="https://github.com/sangmingming/FlyerNotes" target="_blank" rel="noopener" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">GitHub</a>
         <a href="mailto:i@isming.me" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">联系</a>
       </div>
     </div>
