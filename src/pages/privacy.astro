@@ -20,6 +20,7 @@ const sections = [
     bullets: [
       ["应用不主动上报", "不包含任何在后台静默上传设备信息、崩溃日志、行为轨迹或任何设备识别符的代码。"],
       ["网络仅限用户主动触发", "如果你在 memo 中写入了 https:// 链接或远程图片 URL，应用会按你点击 / 渲染该资源的操作，发起一次明目的网络请求（例如在系统浏览器中打开链接，或加载你写的图片 URL）。这些请求由你明确触发、且目标仅限你指定的内容。"],
+      ["可选 Memos 同步", "如果你在设置中主动填写自建 Memos 服务器地址与 Access Token 并开启同步，应用会与该服务器通信以同步你的 memo。该功能默认关闭，服务器地址与凭证完全由你掌控，应用不连接任何我们的服务器（我们也没有服务器）。"],
     ],
     tail:
       "如果你在系统设置或手机厂商的系统服务中看到与本应用相关的网络流量，请检查系统层级的诊断或预装组件，而非本应用。",
@@ -38,11 +39,11 @@ const sections = [
     ],
     bullets: [
       ["相机（CAMERA）", "用于在新建 memo 时直接拍摄并插入图片。不申请时不会触发。"],
-      ["存储 / 媒体（READ_MEDIA_IMAGES / READ_EXTERNAL_STORAGE）", "用于从相册选择图片插入 memo。不申请时不会触发。"],
+      ["相册（系统 Photo Picker）", "通过 Android 系统自带的相册选择器挑选图片或视频插入 memo，应用本身不申请任何存储 / 媒体读取权限。"],
       ["Share Intent 接收（系统级）", "用于接收其他 App 通过系统分享菜单传入的图片与文本，自动转为 memo 草稿。"],
     ],
     tail:
-      "我们**不申请**以下权限：INTERNET（网络）、ACCESS_FINE_LOCATION（精确定位）、READ_CONTACTS（通讯录）、RECORD_AUDIO（麦克风）等。",
+      "我们**不申请**以下权限：ACCESS_FINE_LOCATION（精确定位）、READ_CONTACTS（通讯录）、RECORD_AUDIO（麦克风）等。INTERNET（网络）权限仅用于你主动点击的链接与远程图片，以及可选的、由你自行配置服务器的 Memos 同步。",
   },
   {
     title: "4. 第三方数据收集",
@@ -56,9 +57,8 @@ const sections = [
   {
     title: "5. 备份与导出",
     body: [
-      "当前版本不提供云端备份功能。所有数据都保留在你的设备本地。",
-      "后续版本计划在设置页提供本地导出（导出 JSON / Markdown）与本地导入功能（设置页已留入口）。",
-      "在那之前，如需迁移或备份数据，你可以通过 Android 系统的备份功能（取决于设备厂商），或通过 ADB 取出应用私有目录下的 SQLite 数据库与图片资源。",
+      "设置页提供「导出 / 导入」功能：你可以将全部 memo 与图片资源打包为一个 Markdown ZIP 文件，保存到设备本地或通过系统分享发送到其他设备，并在任意设备上导入恢复。导出内容为纯 Markdown，不加密、无私有格式。",
+      "此外，你可以在设置中主动配置自建的 Memos 服务器进行双向同步（可选，默认关闭）。除此之外本应用不提供任何云端备份，所有数据默认都保留在你的设备本地。",
     ],
   },
   {
@@ -71,7 +71,7 @@ const sections = [
   {
     title: "7. 可验证的承诺",
     body: [
-      "云笺不公开发布源代码，但本隐私政策中的每一条承诺，用户都可以通过以下方式独立验证：",
+      "云笺的源代码在 GitHub 上公开（[github.com/sangmingming/FlyerNotes](https://github.com/sangmingming/FlyerNotes)），本隐私政策中的每一条承诺，用户都可以通过以下方式独立验证：",
     ],
     bullets: [
       ["权限检查", "在 Android 系统中进入「设置 → 应用 → 云笺 → 权限」。云笺的权限列表中不会出现「通讯录」、「定位」、「麦克风」等与数据上报相关的权限；唯一联网用途的 INTERNET 权限仅用于你主动点击的链接与远程图片。"],
@@ -110,7 +110,7 @@ const sections = [
   },
 ];
 
-const lastUpdated = "2026 年 7 月 6 日";
+const lastUpdated = "2026 年 9 月 15 日";
 ---
 
 <Layout title="隐私政策 · 云笺 Yunjian" description="云笺的隐私政策：不收集任何数据，不上传任何内容，所有 memo 仅保存在你的设备本地。">
@@ -147,7 +147,7 @@ const lastUpdated = "2026 年 7 月 6 日";
           一句话总结
         </h2>
         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-          云笺<strong>不收集任何用户数据</strong>，<strong>不上传任何内容到任何服务器</strong>。所有 memo、标签、图片资源、设置与统计数据，都<strong>只保存在你的设备本地</strong>。我们不申请网络权限，App 内不集成任何第三方 SDK。
+          云笺<strong>不收集任何用户数据</strong>，<strong>不上传任何内容到任何服务器</strong>。所有 memo、标签、图片资源、设置与统计数据，都<strong>只保存在你的设备本地</strong>。App 内不集成任何第三方 SDK。可选的 Memos 同步默认关闭，开启后也仅与你自己配置的服务器通信。
         </p>
       </aside>
 
