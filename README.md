@@ -22,4 +22,4 @@ npm run preview      # 本地预览构建产物
 
 ## 协议
 
-网站代码本身以 MIT 协议开源；云笺 App 以 GPLv3 协议开源，详见 [FlyerNotes 仓库](https://github.com/sangmingming/FlyerNotes)。
+网站代码本身以 MIT 协议开源；云笺 App 不开源，其代码仓库为 GitHub 私有仓库，未以任何开源协议发布。
