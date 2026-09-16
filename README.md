@@ -1,6 +1,6 @@
 # 云笺 Yunjian · 官方网站
 
-本站是 [云笺（Yunjian）](https://github.com/sangmingming/FlyerNotes-releases) 的官方网站，基于 [Astro](https://astro.build/) + [Tailwind CSS 4](https://tailwindcss.com/) 构建，并部署在 Vercel。
+本站是 [云笺（Yunjian）](https://github.com/sangmingming/fymemos-website/releases) 的官方网站，基于 [Astro](https://astro.build/) + [Tailwind CSS 4](https://tailwindcss.com/) 构建，并部署在 Vercel。
 
 ## 内容
 
